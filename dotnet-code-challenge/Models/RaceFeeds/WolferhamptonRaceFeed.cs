@@ -6,5 +6,8 @@ namespace dotnet_code_challenge.Models.RaceFeeds
 {
     public class WolferhamptonRaceFeed
     {
+        // Participants.Name
+        // Markets.Selections.Tags.participant
+        // Markets.Selections.Tags.name
     }
 }
