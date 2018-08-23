@@ -14,8 +14,9 @@ namespace dotnet_code_challenge.FeedDataLoader
         private const string CAULFIELD = "Caulfield";
         private XmlSerializer xmlSerializer = new XmlSerializer(typeof(CaulfieldRaceFeed));
 
-        public bool CanHandle(RawRaceFeed theRawRaceFeed)
+        public bool CanHandle(RawRaceFeed theRawRaceFeed, out object theDeserializedObj)
         {
+            theDeserializedObj = null;
             if (theRawRaceFeed == null || 
                 theRawRaceFeed.FileName == null || 
                 theRawRaceFeed.FeedStream == null)
@@ -34,6 +35,7 @@ namespace dotnet_code_challenge.FeedDataLoader
                 return false;
             }
 
+            theDeserializedObj = aCaulfieldRaceFeed;
             return !string.IsNullOrEmpty(aCaulfieldRaceFeed.MeetingType) &&
                    aCaulfieldRaceFeed.MeetingType.Equals(HORSE_RACING, StringComparison.OrdinalIgnoreCase) &&
                    aCaulfieldRaceFeed.Track != null &&
@@ -41,9 +43,9 @@ namespace dotnet_code_challenge.FeedDataLoader
                    aCaulfieldRaceFeed.Track.Name.Equals(CAULFIELD, StringComparison.OrdinalIgnoreCase);
         }
 
-        public HorseRace GetHorseRace(RawRaceFeed theRawRaceFeed)
+        public HorseRace GetHorseRace(object theDeserializedObj)
         {
-            var aCaulfieldRaceFeed = GetCaulfieldRaceFeed(theRawRaceFeed.FeedStream);
+            var aCaulfieldRaceFeed = theDeserializedObj as CaulfieldRaceFeed;
             if (aCaulfieldRaceFeed == null || 
                 aCaulfieldRaceFeed.Races == null ||
                 aCaulfieldRaceFeed.Races.Length == 0 ||

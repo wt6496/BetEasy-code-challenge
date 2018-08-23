@@ -21,9 +21,10 @@ namespace dotnet_code_challenge
         {
             foreach (var aFeedDataLoader in feedDataLoaders)
             {
-                if (aFeedDataLoader.CanHandle(theRawRaceFeed))
+                object aDeserializedObj;
+                if (aFeedDataLoader.CanHandle(theRawRaceFeed, out aDeserializedObj))
                 {
-                    return aFeedDataLoader.GetHorseRace(theRawRaceFeed);
+                    return aFeedDataLoader.GetHorseRace(aDeserializedObj);
                 }
             }
 

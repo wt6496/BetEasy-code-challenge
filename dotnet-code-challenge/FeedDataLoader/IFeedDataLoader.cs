@@ -8,8 +8,8 @@ namespace dotnet_code_challenge.FeedDataLoader
 {
     public interface IFeedDataLoader
     {
-        bool CanHandle(RawRaceFeed theRawRaceFeed);
+        bool CanHandle(RawRaceFeed theRawRaceFeed, out object theDeserializedObj);
 
-        HorseRace GetHorseRace(RawRaceFeed theRawRaceFeed);
+        HorseRace GetHorseRace(object theDeserializedObj);
     }
 }

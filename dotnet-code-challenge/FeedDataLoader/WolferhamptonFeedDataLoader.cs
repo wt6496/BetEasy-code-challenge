@@ -14,8 +14,9 @@ namespace dotnet_code_challenge.FeedDataLoader
         private const string WOLVERHAMPTON = "Wolverhampton";
         private JsonSerializer jsonSerializer = new JsonSerializer();
 
-        public bool CanHandle(RawRaceFeed theRawRaceFeed)
+        public bool CanHandle(RawRaceFeed theRawRaceFeed, out object theDeserializedObj)
         {
+            theDeserializedObj = null;
             if (theRawRaceFeed == null ||
                 theRawRaceFeed.FileName == null ||
                 theRawRaceFeed.FeedStream == null)
@@ -34,6 +35,7 @@ namespace dotnet_code_challenge.FeedDataLoader
                 return false;
             }
 
+            theDeserializedObj = aWolferhamptonRaceFeed;
             return aWolferhamptonRaceFeed.RawData != null &&
                 aWolferhamptonRaceFeed.RawData.Tags != null &&
                 !string.IsNullOrEmpty(aWolferhamptonRaceFeed.RawData.Tags.Sport) &&
@@ -42,9 +44,9 @@ namespace dotnet_code_challenge.FeedDataLoader
                 aWolferhamptonRaceFeed.RawData.Tags.Track.Equals(WOLVERHAMPTON, StringComparison.OrdinalIgnoreCase);
         }
 
-        public HorseRace GetHorseRace(RawRaceFeed theRawRaceFeed)
+        public HorseRace GetHorseRace(object theDeserializedObj)
         {
-            var aWolferhamptonRaceFeed = GetWolferhamptonRaceFeed(theRawRaceFeed.FeedStream);
+            var aWolferhamptonRaceFeed = theDeserializedObj as WolferhamptonRaceFeed;
             if (aWolferhamptonRaceFeed == null ||
                 aWolferhamptonRaceFeed.RawData == null ||
                 aWolferhamptonRaceFeed.RawData.Markets == null ||
