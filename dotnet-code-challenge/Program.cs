@@ -12,7 +12,7 @@ namespace dotnet_code_challenge
         {
             var aSources = new List<string>();
             aSources.Add(@"FeedData\Caulfield_Race1.xml");
-            ////aSources.Add(@"FeedData\Wolferhampton_Race1.json");
+            aSources.Add(@"FeedData\Wolferhampton_Race1.json");
 
             var aFeedDataLoaders = new List<IFeedDataLoader>();
             aFeedDataLoaders.Add(new CaulfieldFeedDataLoader());
