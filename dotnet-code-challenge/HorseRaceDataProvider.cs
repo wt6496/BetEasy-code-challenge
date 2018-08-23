@@ -9,14 +9,25 @@ namespace dotnet_code_challenge
 {
     public class HorseRaceDataProvider
     {
+        private readonly ICollection<IFeedDataLoader> feedDataLoaders;
+
         public HorseRaceDataProvider(
             ICollection<IFeedDataLoader> theFeedDataLoaders)
         {
+            feedDataLoaders = theFeedDataLoaders;
         }
 
         public HorseRace GetHorseRace(RawRaceFeed theRawRaceFeed)
         {
-            throw new NotImplementedException();
+            foreach (var aFeedDataLoader in feedDataLoaders)
+            {
+                if (aFeedDataLoader.CanHandle(theRawRaceFeed))
+                {
+                    return aFeedDataLoader.GetHorseRace(theRawRaceFeed);
+                }
+            }
+
+            return null;
         }
     }
 }
